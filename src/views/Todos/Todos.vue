@@ -1,28 +1,39 @@
 <template>
-    <h1>Lista de Terefas</h1>   
+    <h1>Lista de Terefas</h1>  
+
+    <div v-if="loading">Carregando...</div> 
 
     <ul>
         <li v-for="todo in todos" 
             :key="todo.identify">
-            {{ todo.name}}
+            {{ todo.title}}
         </li>
     </ul>
 </template>
 
 <script>
+import TodoService from '@/Services/todos.service'
+import { onMounted, ref } from 'vue'
 
 export default {
     name: 'Todos',
     setup() {
-        const todos = [
-            {identify: 1, name: 'task 01', completed: true},
-            {identify: 2, name: 'task 02', completed: true},
-            {identify: 3, name: 'task 03', completed: true},
-            {identify: 4, name: 'task 04', completed: false},
-            {identify: 5, name: 'task 05', completed: true}
-        ]
+        const todos = ref([])
+
+        const loading = ref(false)
+
+        onMounted (() => {
+            loading.value = true
+            TodoService.getAll()
+                .then(response => {
+                   todos.value = response.data.data
+                })
+                .catch(error => console.log(error))
+                .finally(() => loading.value = false)
+        }) 
 
         return {
+            loading,
             todos
         }
     }
