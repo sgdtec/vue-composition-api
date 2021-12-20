@@ -6,7 +6,7 @@
             <input type="text" name="title" placeholder="Título" v-model="todo.name">
             <input type="text" name="description" placeholder="Descrição" v-model="todo.description">
             <button type="submit" :disabled="todo.loading">
-                <span v-if="todo.loading">Enviando...</span>
+                <span v-if="todo.loading">Processando...</span>
                 <span v-else>Enviar</span>
             </button>
         </form>

@@ -3,7 +3,10 @@
         <input type="checkbox" :checked="completed" @change="toogleStatus">
         {{ todo.title }} - {{ todo.body }}
         <router-link :to="{name: 'todos.edit', params: {id: todo.identify}}">Edit</router-link> -
-        <a href="#" @click.prevent="deleteTodo">Deletar</a>
+        <a href="#" 
+           @click.prevent="deleteTodo">
+           Deletar
+        </a>
     </div>
 </template>
 
@@ -31,6 +34,7 @@ export default {
                 description: todo.body,
                 completed: !completed.value
             }
+         
             TodoService.editTodo(props.todo.identify, params)
                         .then(() => emit('todoUpdated', params))
         }
